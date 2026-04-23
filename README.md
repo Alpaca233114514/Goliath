@@ -1,86 +1,91 @@
 # Goliath
-# 预置README，现有程序无实际功能
 
-> AI Agent Sidebar for Obsidian. Bring your own AI.
+将 Obsidian 笔记桥接至 AI 编程工具与 API。
 
-Goliath 是一个通用的 Obsidian 侧边栏插件，让你在笔记应用内直接与多种 AI Agent 对话，并让它们读取、理解甚至编辑你的 Vault 内容。
+## 功能
 
-## 特性
-
-- **多 Agent 架构**：支持 Claude Code (CLI)、Anthropic API、OpenAI API、OpenAI-Compatible (Ollama / vLLM / LM Studio 等)
-- **Vault 原生集成**：AI 自动读取当前打开的笔记作为上下文，支持 `@笔记名` 手动引用
-- **Vault CRUD**：AI 可执行读、写、创建、重命名文件操作（删除需确认）
-- **消息持久化**：会话自动保存，Obsidian 重启后可恢复
-- **完整 Markdown 渲染**：支持代码块、表格、LaTeX 公式（依赖 Obsidian 原生 MathJax）
-- **流式输出**：实时显示 AI 回复，无需等待整段生成
-- **主题自适应**：完全使用 Obsidian CSS 变量，暗色/亮色模式无缝切换
+- **多种导出格式**：将笔记导出为 Claude Code、Kimi Code CLI、OpenAI Chat Completions 及 OpenAI Response API 的提示词格式
+- **多 API 服务商支持**：在 Obsidian 内直连 Anthropic、Google Gemini 或本地 OpenAI 兼容 API（如 LM Studio、Ollama 等）
+- **上下文感知**：构建上下文时可包含链接笔记与 frontmatter
+- **原生 Obsidian 集成**：侧边栏聊天视图、命令面板指令及设置页
 
 ## 安装
 
-> ⚠️ 本插件尚未上架 Obsidian 社区插件市场，目前仅支持手动安装。
-
-### 手动安装
-
-1. 下载最新 Release 中的 `main.js`、`manifest.json`、`styles.css`
-2. 在你的 Vault 目录下创建文件夹：`<vault>/.obsidian/plugins/goliath/`
-3. 将三个文件复制到该文件夹
-4. 重启 Obsidian
-5. 进入 `设置 → 社区插件`，关闭安全模式
-6. 找到 **Goliath** 并启用
-
-### 通过 BRAT 安装（Beta）
-
-1. 安装 [BRAT](https://github.com/TfTHacker/obsidian42-brat) 插件
-2. `Ctrl/Cmd+P` → `BRAT: Add a beta plugin for testing`
-3. 输入：`https://github.com/Alpaca233114514/Goliath`
+1. 下载最新版本
+2. 解压至 Obsidian 仓库的 `.obsidian/plugins/goliath/` 目录
+3. 在 Obsidian 设置 → 社区插件 中启用
 
 ## 配置
 
-进入 `设置 → Goliath`：
+打开 设置 → Goliath 进行配置：
 
-### Claude Code (CLI)
-- **模式**：CLI
-- **路径**：`claude` 或绝对路径（如 `/opt/homebrew/bin/claude`）
-- **YOLO 模式**：跳过 CLI 的交互式权限确认（`--dangerously-skip-permissions`）
+### API 服务商
 
-### Anthropic / OpenAI / OpenAI-Compatible (API)
-- **模式**：API
-- **API Key**：在插件设置中填写，或从环境变量读取
-- **模型**：支持模型列表自动获取
-- **Base URL**：OpenAI-Compatible 必填（如 `http://localhost:11434/v1`）
+- **Anthropic**：填写 API 密钥并选择模型（默认：`claude-sonnet-4-6`）
+- **Google Gemini**：填写 API 密钥并选择模型（默认：`gemini-2.5-pro`）
+- **本地 API**：配置 OpenAI 兼容本地服务的 base URL（默认：`http://localhost:1234/v1`）
+
+### 上下文选项
+
+- **系统提示词**：AI 对话的默认系统提示词
+- **包含 Frontmatter**：上下文包含笔记 YAML frontmatter
+- **包含链接笔记**：跟随 wiki-link 包含关联笔记
+- **最大链接深度**：链接追踪层数（1-3）
 
 ## 使用
 
-- **打开侧边栏**：点击左侧 Ribbon 图标，或使用命令面板 `Ctrl/Cmd+P` → `Open Goliath`
-- **发送消息**：`Enter` 发送，`Shift+Enter` 换行
-- **切换 Agent**：侧边栏底部标签栏点击切换
-- **引用笔记**：输入框中使用 `@笔记名` 手动附加上下文
+### 命令
 
-## 隐私与安全
+| 命令 | 操作 |
+|------|------|
+| `Goliath: 打开聊天` | 打开侧边栏聊天 |
+| `Goliath: 导出当前笔记为提示词` | 以选定格式复制当前笔记至剪贴板 |
+| `Goliath: 与当前笔记聊天` | 以当前笔记为上下文打开聊天 |
 
-- **数据外发**：使用 API 模式时，你的消息和笔记内容会发送至对应的 AI 服务商（Anthropic / OpenAI / 你的本地服务器）。请勿在对话中发送敏感或机密信息。
-- **文件安全**：所有 Vault 文件操作均限制在 Vault 根目录内，禁止目录遍历。删除操作始终需要你的手动确认。
-- **CLI 模式**：YOLO 模式会禁用 AI 工具的交互式确认，请仅在可信环境下开启。
+### 聊天视图
+
+点击左侧功能区 Goliath 图标或执行"打开聊天"打开侧边栏。支持流式响应。
+
+### 导出格式
+
+导出时可选：
+
+- **Claude Code**：基于 `<file>` 标签的 XML 格式
+- **Kimi Code CLI**：Markdown 标题格式
+- **OpenAI Chat Completions**：标准 `messages` 数组 JSON
+- **OpenAI Response API**：新版 Response API 含文件输入
 
 ## 开发
 
 ```bash
-git clone https://github.com/Alpaca233114514/Goliath.git
-cd Goliath
 npm install
-npm run dev      # 热重载
+npm run dev      # 监听模式
 npm run build    # 生产构建
+npm test         # 运行测试
+npm run test:coverage  # 运行测试并生成覆盖率报告
 ```
 
-## 路线图
+## 项目结构
 
-- [x] MVP：Claude Code CLI 支持 + 流式聊天
-- [ ] 多 Agent 切换与设置面板
-- [ ] 消息持久化与会话管理
-- [ ] Vault CRUD（AI 读写文件）
-- [ ] `@笔记名` 手动引用
-- [ ] 提交 Obsidian 社区插件市场
-
-## 许可证
-
-Apache License 2.0
+```
+src/
+  main.ts              # 插件入口
+  settings.ts          # 设置数据模型
+  settings-tab.ts      # 设置 UI
+  api/
+    types.ts           # API 共享类型
+    base-client.ts     # API 客户端抽象基类
+    anthropic-client.ts
+    gemini-client.ts
+    openai-client.ts   # OpenAI 兼容（覆盖本地 API）
+  formats/
+    claude-code.ts
+    kimi-code.ts
+    oai-chat.ts
+    oai-response.ts
+  ui/
+    export-modal.ts    # 格式选择模态框
+    chat-view.ts       # 侧边栏聊天视图
+  utils/
+    vault-helpers.ts   # 仓库文件读取工具
+```

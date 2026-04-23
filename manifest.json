@@ -1,0 +1,11 @@
+{
+  "id": "goliath",
+  "name": "Goliath",
+  "version": "0.0.2",
+  "minAppVersion": "0.15.0",
+  "description": "Bridge Obsidian notes to AI coding tools and APIs. Support Claude Code, Kimi Code CLI, OpenAI formats, and multiple API providers.",
+  "author": "",
+  "authorUrl": "",
+  "fundingUrl": "",
+  "isDesktopOnly": false
+}
