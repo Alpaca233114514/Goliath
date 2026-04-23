@@ -254,7 +254,11 @@ export class ChatView extends ItemView {
   }
 
   private async sendMessage(): Promise<void> {
-    if (!this.chatCore || !this.inputElement || this.isStreaming) return;
+    if (!this.inputElement || this.isStreaming) return;
+    if (!this.chatCore) {
+      new Notice("AI provider not configured. Check settings and API key.", 5000);
+      return;
+    }
 
     const userContent = this.inputElement.value.trim();
     if (!userContent) return;
@@ -597,7 +601,8 @@ export class ChatView extends ItemView {
 
   private updateSendButtonState(): void {
     if (!this.sendButton || !this.inputElement) return;
-    const canSend = this.inputElement.value.trim().length > 0 && !this.isStreaming;
+    const canSend =
+      this.inputElement.value.trim().length > 0 && !this.isStreaming && !!this.chatCore;
     this.sendButton.disabled = !canSend;
     this.sendButton.style.backgroundColor = canSend
       ? "var(--interactive-accent)"

@@ -1413,8 +1413,12 @@ var ChatView = class extends import_obsidian4.ItemView {
     this.inputElement.style.height = `${newHeight}px`;
   }
   async sendMessage() {
-    if (!this.chatCore || !this.inputElement || this.isStreaming)
+    if (!this.inputElement || this.isStreaming)
       return;
+    if (!this.chatCore) {
+      new import_obsidian4.Notice("AI provider not configured. Check settings and API key.", 5e3);
+      return;
+    }
     const userContent = this.inputElement.value.trim();
     if (!userContent)
       return;
@@ -1706,7 +1710,7 @@ var ChatView = class extends import_obsidian4.ItemView {
   updateSendButtonState() {
     if (!this.sendButton || !this.inputElement)
       return;
-    const canSend = this.inputElement.value.trim().length > 0 && !this.isStreaming;
+    const canSend = this.inputElement.value.trim().length > 0 && !this.isStreaming && !!this.chatCore;
     this.sendButton.disabled = !canSend;
     this.sendButton.style.backgroundColor = canSend ? "var(--interactive-accent)" : "var(--background-modifier-border-hover)";
   }
@@ -2666,7 +2670,12 @@ var GoliathPlugin = class extends import_obsidian8.Plugin {
       );
       const contextText = contexts.map((ctx) => `File: ${ctx.path}
 ${ctx.content}`).join("\n\n---\n\n");
-      view.setSystemPrompt(this.settings.systemPrompt);
+      const systemPrompt = this.settings.systemPrompt ? `${this.settings.systemPrompt}
+
+---
+
+${contextText}` : contextText;
+      view.setSystemPrompt(systemPrompt);
       console.log("[Goliath] Chat context built:", {
         file: file.path,
         contextChunks: contexts.length,
