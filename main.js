@@ -1244,6 +1244,7 @@ var ChatView = class extends import_obsidian4.ItemView {
         app: this.appRef
       });
     }
+    this.updateSendButtonState();
   }
   setSystemPrompt(prompt) {
     const existingIndex = this.messages.findIndex((m) => m.role === "system");

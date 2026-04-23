@@ -61,6 +61,7 @@ export class ChatView extends ItemView {
         app: this.appRef,
       });
     }
+    this.updateSendButtonState();
   }
 
   setSystemPrompt(prompt: string): void {
