@@ -31,8 +31,8 @@ const GOLIATH_ICON = `
 `;
 
 export default class GoliathPlugin extends Plugin {
-  settings: GoliathSettings;
-  sessionManager: SessionManager;
+  settings!: GoliathSettings;
+  sessionManager!: SessionManager;
 
   async onload(): Promise<void> {
     this.sessionManager = new SessionManager(this.app);
@@ -43,7 +43,7 @@ export default class GoliathPlugin extends Plugin {
 
     this.registerView(
       VIEW_TYPE_GOLIATH_CHAT,
-      (leaf) => new ChatView(leaf)
+      (leaf) => new ChatView(leaf, this)
     );
 
     const i18n = t();
@@ -93,9 +93,10 @@ export default class GoliathPlugin extends Plugin {
     try {
       const { workspace } = this.app;
 
-      let leaf = workspace.getLeavesOfType(VIEW_TYPE_GOLIATH_CHAT)[0];
+      let leaf: WorkspaceLeaf | null | undefined = workspace.getLeavesOfType(VIEW_TYPE_GOLIATH_CHAT)[0];
       if (!leaf) {
         leaf = workspace.getRightLeaf(false);
+        if (!leaf) return;
         await leaf.setViewState({
           type: VIEW_TYPE_GOLIATH_CHAT,
           active: true,

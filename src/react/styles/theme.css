@@ -1,0 +1,213 @@
+/* ArcoDesign -> Obsidian CSS Variable Bridge */
+/* Scoped under .goliath-react-root to avoid leaking to rest of Obsidian */
+
+.goliath-react-root {
+  /* Backgrounds */
+  --color-bg-1: var(--background-primary);
+  --color-bg-2: var(--background-primary-alt);
+  --color-bg-3: var(--background-secondary);
+  --color-bg-4: var(--background-secondary-alt);
+  --color-bg-white: var(--background-primary);
+  --color-bg-popup: var(--background-secondary);
+
+  /* Text colors */
+  --color-text-1: var(--text-normal);
+  --color-text-2: var(--text-muted);
+  --color-text-3: var(--text-faint);
+  --color-text-4: var(--text-faint);
+
+  /* Fill colors */
+  --color-fill-1: rgba(var(--mono-rgb-100), 0.04);
+  --color-fill-2: rgba(var(--mono-rgb-100), 0.08);
+  --color-fill-3: rgba(var(--mono-rgb-100), 0.12);
+  --color-fill-4: rgba(var(--mono-rgb-100), 0.16);
+
+  /* Borders */
+  --color-border-1: var(--background-modifier-border);
+  --color-border-2: var(--background-modifier-border-hover);
+  --color-border-3: var(--background-modifier-border-focus);
+  --color-border-4: var(--background-modifier-border-focus);
+
+  /* Primary accent */
+  --color-primary: var(--interactive-accent);
+  --color-primary-light-1: rgba(var(--interactive-accent-rgb), 0.15);
+  --color-primary-light-2: rgba(var(--interactive-accent-rgb), 0.25);
+  --color-primary-hover: var(--interactive-accent-hover);
+  --color-primary-active: var(--interactive-accent-hover);
+  --color-primary-disabled: rgba(var(--interactive-accent-rgb), 0.35);
+
+  /* Link colors */
+  --color-link: var(--link-color);
+  --color-link-hover: var(--link-color-hover);
+  --color-link-active: var(--link-color-hover);
+
+  /* Semantic colors mapped to Obsidian */
+  --color-success: var(--color-green);
+  --color-success-light-1: rgba(var(--color-green-rgb), 0.15);
+  --color-success-light-2: rgba(var(--color-green-rgb), 0.25);
+  --color-success-bg: rgba(var(--color-green-rgb), 0.1);
+  --color-danger: var(--color-red);
+  --color-danger-light-1: rgba(var(--color-red-rgb), 0.15);
+  --color-danger-light-2: rgba(var(--color-red-rgb), 0.25);
+  --color-danger-bg: rgba(var(--color-red-rgb), 0.1);
+  --color-warning: var(--color-orange);
+  --color-warning-light-1: rgba(var(--color-orange-rgb), 0.15);
+  --color-warning-light-2: rgba(var(--color-orange-rgb), 0.25);
+  --color-warning-bg: rgba(var(--color-orange-rgb), 0.1);
+
+  /* Mask / Modal */
+  --color-mask-bg: rgba(0, 0, 0, 0.6);
+
+  /* Scrollbar */
+  color: var(--text-normal);
+  background-color: var(--background-primary);
+}
+
+/* Dark mode overrides */
+.theme-dark .goliath-react-root {
+  --color-fill-1: rgba(var(--mono-rgb-0), 0.04);
+  --color-fill-2: rgba(var(--mono-rgb-0), 0.08);
+  --color-fill-3: rgba(var(--mono-rgb-0), 0.12);
+  --color-fill-4: rgba(var(--mono-rgb-0), 0.16);
+}
+
+/* Override Arco component-specific styles to match Obsidian */
+.goliath-react-root .arco-btn-primary {
+  background-color: var(--interactive-accent);
+  border-color: var(--interactive-accent);
+}
+
+.goliath-react-root .arco-btn-primary:hover {
+  background-color: var(--interactive-accent-hover);
+  border-color: var(--interactive-accent-hover);
+}
+
+.goliath-react-root .arco-input,
+.goliath-react-root .arco-textarea {
+  background-color: var(--background-primary-alt);
+  border-color: var(--background-modifier-border);
+  color: var(--text-normal);
+}
+
+.goliath-react-root .arco-input:focus,
+.goliath-react-root .arco-textarea:focus {
+  border-color: var(--interactive-accent);
+  background-color: var(--background-primary);
+}
+
+.goliath-react-root .arco-dropdown-menu {
+  background-color: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+}
+
+.goliath-react-root .arco-dropdown-menu-item:hover {
+  background-color: var(--background-modifier-hover);
+}
+
+.goliath-react-root .arco-tooltip-content {
+  background-color: var(--background-secondary-alt);
+  color: var(--text-normal);
+}
+
+.goliath-react-root .arco-modal-mask {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.goliath-react-root .arco-modal-content {
+  background-color: var(--background-secondary);
+}
+
+.goliath-react-root .arco-select-view {
+  background-color: var(--background-primary-alt);
+  border-color: var(--background-modifier-border);
+}
+
+.goliath-react-root .arco-menu {
+  background-color: var(--background-secondary);
+}
+
+.goliath-react-root .arco-menu-item:hover {
+  background-color: var(--background-modifier-hover);
+}
+
+.goliath-react-root .arco-spin-dot {
+  color: var(--interactive-accent);
+}
+
+/* Scrollbar theming within chat */
+.goliath-react-root ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.goliath-react-root ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.goliath-react-root ::-webkit-scrollbar-thumb {
+  background: var(--background-modifier-border);
+  border-radius: 3px;
+}
+
+.goliath-react-root ::-webkit-scrollbar-thumb:hover {
+  background: var(--background-modifier-border-hover);
+}
+
+/* Code block copy button styling */
+.goliath-react-root pre {
+  position: relative;
+}
+
+.goliath-react-root .goliath-code-copy-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  padding: 2px 8px;
+  font-size: 10px;
+  border-radius: 4px;
+  background-color: var(--background-primary);
+  color: var(--text-normal);
+  border: 1px solid var(--background-modifier-border);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.goliath-react-root pre:hover .goliath-code-copy-btn {
+  opacity: 1;
+}
+
+.goliath-react-root .goliath-code-copy-btn:hover {
+  background-color: var(--background-modifier-hover);
+}
+
+/* Streaming indicator animation */
+@keyframes goliath-pulse {
+  0%, 80%, 100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
+}
+
+/* Markdown content overrides */
+.goliath-react-root .markdown-rendered pre {
+  background-color: var(--background-primary-alt);
+  padding: 12px;
+  border-radius: 6px;
+  overflow-x: auto;
+}
+
+.goliath-react-root .markdown-rendered code {
+  font-family: var(--font-monospace);
+  font-size: 13px;
+}
+
+.goliath-react-root .markdown-rendered p {
+  margin: 0 0 8px;
+}
+
+.goliath-react-root .markdown-rendered p:last-child {
+  margin-bottom: 0;
+}

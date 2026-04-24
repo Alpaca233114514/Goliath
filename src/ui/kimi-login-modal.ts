@@ -11,8 +11,8 @@ export class KimiLoginModal extends Modal {
   private deviceId: string;
   private onSuccess?: (tokens: KimiTokens) => void;
   private abortController = new AbortController();
-  private statusEl: HTMLElement;
-  private userCodeEl: HTMLElement;
+  private statusEl!: HTMLElement;
+  private userCodeEl!: HTMLElement;
   private linkEl: HTMLAnchorElement | null = null;
 
   constructor(

@@ -241,10 +241,13 @@ export class GoliathSettingTab extends PluginSettingTab {
         });
         loginButton.addEventListener("click", async () => {
           const data = (await this.plugin.loadData()) as Record<string, unknown> | undefined;
-          let deviceId = data?.kimiDeviceId;
-          if (typeof deviceId !== "string" || !deviceId) {
+          const rawDeviceId = data?.kimiDeviceId;
+          let deviceId: string;
+          if (typeof rawDeviceId !== "string" || !rawDeviceId) {
             deviceId = crypto.randomUUID();
             await this.plugin.saveData({ ...data, kimiDeviceId: deviceId });
+          } else {
+            deviceId = rawDeviceId;
           }
 
           new KimiLoginModal(this.app, deviceId, async (tokens) => {
